@@ -21,6 +21,10 @@ module.exports = {
 				exclude: [/node_modules/, /dist/],
 				use: 'babel-loader',
 				include: PATHS.src
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader'],
 			}
 		]
 	},

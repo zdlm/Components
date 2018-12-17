@@ -1,3 +1,5 @@
+import commonStyles from './common.css';
+import variables from './vars.css';
 /**
  * Component class
  * @class
@@ -30,26 +32,27 @@ export default class Component extends HTMLElement {
 	attributeChangedCallback() {
 
 	}
-	get style() {
-		return this.style;
-	}
-	set style(styles) {
-		this.style = styles;
-	}
-
-	// Below, you can get/set your ex. checkbox' state
-	set checked(value) {
-		this._checked = Boolean(value);
-	}
-	get checked() {
-		return this.hasAttribute('checked');
-	}
 	_connect() {
 		// Put all event listener bindings and dom element declarations here
 	}
 	async _render() {
 		// use this for set innerHTML of your template
 		this._template.innerHTML = this.render();
+	}
+
+	styles(stylesheet) {
+		/**
+		 * @TODO Inject `commonStyles` somewhere, so it's only loaded once for cloning
+		 */
+		this._template.innerHTML = `
+			<style>
+				${variables}
+				${commonStyles}
+				${stylesheet}
+			</style>
+			<script> </script>
+		`;
+		this.shadowRoot.appendChild(this._template.content.cloneNode(true));
 	}
 }
 
