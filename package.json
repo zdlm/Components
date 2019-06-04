@@ -42,12 +42,12 @@
 	"lint-staged": {
 		"*.{json,css,md,html}": [
 			"prettier --write",
-			"git add -f"
+			"git add"
 		],
 		"*.js": [
 			"eslint",
 			"prettier --write",
-			"git add -f"
+			"git add"
 		]
 	},
 	"devDependencies": {
