@@ -1,0 +1,20 @@
+{
+	"description": "Reusable Web Components",
+	"topics": [
+		"ui",
+		"components",
+		"reusable",
+		"webcomponents",
+		"client-side",
+		"javascript",
+		"css",
+		"customelements",
+		"shadowdom"
+	],
+	"enableIssues": true,
+	"enableWiki": true,
+	"extraChecks": [
+		"Travis CI - Pull Request",
+		"continuous-integration/travis-ci/pr"
+	]
+}

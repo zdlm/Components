@@ -1,0 +1,15 @@
+{
+	"name": "@tw/elements.progress-bar",
+	"version": "0.2.7",
+	"src": "src/progress-bar.js",
+	"main": "lib/progress-bar.cjs.js",
+	"module": "lib/progress-bar.mjs",
+	"browser": "lib/progress-bar.umd.js",
+	"files": [
+		"lib/*"
+	],
+	"dependencies": {
+		"@tw/elements": "^0.2.7"
+	},
+	"gitHead": ""
+}

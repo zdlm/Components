@@ -1,0 +1,15 @@
+{
+	"name": "@tw/elements.button",
+	"version": "0.2.7",
+	"src": "src/button.js",
+	"main": "lib/button.cjs.js",
+	"module": "lib/button.mjs",
+	"browser": "lib/button.umd.js",
+	"files": [
+		"lib/*"
+	],
+	"dependencies": {
+		"@tw/elements": "^0.2.7"
+	},
+	"gitHead": "e88391ca0cd629eac27ed1ca70ccdb64c1b31b7a"
+}

@@ -1,46 +1,114 @@
 {
-	"name": "webcomponents",
-	"version": "1.0.0",
-	"description": "Components made by web components",
-	"main": "./webpack/webpack.common.js",
+	"name": "tw-elements",
+	"description": "The Web Component Library & Framework",
+	"bugs": {
+		"url": "https://github.com/zdlm/Components/issues"
+	},
+	"author": "Leo Zhang",
+	"contributors": [
+		"Leo Zhang <lza@tradeshift.com> (https://github.com/zdlm)"
+	],
 	"scripts": {
-		"start": "webpack-dev-server  --hot --inline --open --config ./webpack/webpack.dev.js",
-		"build": "webpack --config ./webpack/webpack.prod.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "run-p watch server",
+		"dev": "run-p watch server-reload",
+		"test": "add some test later",
+		"format": "cross-env-shell prettier --write --config `pwd`/.prettierrc \"packages/**/src/**/*.{js,json,css,md,html}\" \"index.{js,html}\"",
+		"lint": "cross-env-shell eslint --config `pwd`/.eslintrc --color \"packages/**/src/**/*.js\"",
+		"clean": "cross-env-shell lerna exec -- rm -f ./lib/*",
+		"build": "cross-env-shell lerna exec -- rollup -c=`pwd`/rollup.config.js",
+		"build:prod": "cross-env PRODUCTION=true npm run build",
+		"watch": "cross-env-shell lerna exec --parallel -- rollup -w -c=`pwd`/rollup.config.js",
+		"server": "server start --watch",
+		"server-reload": "reload --browser --exts html,umd.js",
+		"storybook": "start-storybook -p 9009 -s ./static",
+		"storybook:build": "build-storybook -s ./static -o .out",
+		"storybook:deploy": "storybook-to-ghpages",
+		"build-storybook": "build-storybook -s ./static -o .out",
+		"copy:static": "./tasks/copy-static.sh",
+		"pretest": "run-s build:prod copy:static",
+		"prestorybook": "run-s build:prod copy:static",
+		"prestorybook:build": "run-s build:prod copy:static",
+		"lerna:bootstrap:no-ci": "lerna bootstrap --no-ci",
+		"lerna:bootstrap:ci": "lerna bootstrap --ci",
+		"greenkeeper:lockfile:update": "greenkeeper-lockfile-update",
+		"greenkeeper:lockfile:upload": "greenkeeper-lockfile-upload",
+		"component-gen": "plop"
 	},
-	"author": "Leo",
-	"license": "ISC",
-	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-core": "^6.26.0",
-		"babel-eslint": "^8.2.2",
-		"babel-loader": "^7.1.2",
-		"babel-plugin-transform-custom-element-classes": "^0.1.0",
-		"babel-plugin-transform-decorators-legacy": "^1.3.4",
-		"babel-plugin-transform-runtime": "^6.23.0",
-		"babel-preset-env": "^1.6.1",
-		"babel-preset-stage-0": "^6.24.1",
-		"clean-webpack-plugin": "^0.1.18",
-		"css-loader": "^2.0.1",
-		"eslint": "^4.18.1",
-		"favicons-webpack-plugin": "^0.0.7",
-		"html-webpack-plugin": "^2.30.1",
-		"webpack": "^3.10.0",
-		"webpack-dev-server": "^2.11.1",
-		"webpack-merge": "^4.1.1"
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
 	},
-	"babel": {
-		"presets": [
-			"env",
-			"stage-0"
+	"lint-staged": {
+		"*.{json,css,md,html}": [
+			"prettier --write",
+			"git add -f"
 		],
-		"plugins": [
-			"transform-custom-element-classes",
-			"transform-runtime",
-			"transform-decorators-legacy"
+		"*.js": [
+			"eslint",
+			"prettier --write",
+			"git add -f"
 		]
 	},
+	"devDependencies": {
+		"@babel/core": "^7.4.4",
+		"@babel/preset-env": "^7.4.4",
+		"@commonshost/server": "6.9.0",
+		"@open-wc/demoing-storybook": "^0.2.2",
+		"@storybook/storybook-deployer": "^2.8.1",
+		"@webcomponents/webcomponentsjs": "^2.2.10",
+		"babel-loader": "^8.0.5",
+		"babel-plugin-minify-dead-code-elimination": "^0.5.0",
+		"chalk": "^2.4.2",
+		"cross-env": "^5.2.0",
+		"eslint": "5.16.0",
+		"eslint-config-tradeshift": "6.1.0",
+		"eslint-plugin-lit": "^0.6.0",
+		"fast-async": "^6.3.8",
+		"greenkeeper-lockfile": "^1.15.1",
+		"husky": "^2.2.0",
+		"lerna": "^3.13.4",
+		"lint-staged": "^8.1.6",
+		"lit-element": "^2.1.0",
+		"npm-run-all": "^4.1.5",
+		"plop": "^2.3.0",
+		"postcss": "^7.0.16",
+		"postcss-preset-env": "^6.6.0",
+		"prettier": "1.16.4",
+		"rollup": "^1.11.3",
+		"rollup-plugin-babel": "^4.3.2",
+		"rollup-plugin-commonjs": "^9.3.4",
+		"rollup-plugin-node-resolve": "^4.2.3",
+		"rollup-plugin-postcss": "^2.0.3",
+		"rollup-plugin-terser": "^4.0.4",
+		"reload": "^3.0.1"
+	},
 	"dependencies": {
-		"style-loader": "^0.23.1"
-	}
+		"@tw/elements": "file:packages/core",
+		"@tw/elements.button": "file:packages/components/button",
+		"@tw/elements.button-group": "file:packages/components/button-group",
+		"@tw/elements.root": "file:packages/components/root",
+		"@tw/elements.progress-bar": "file:packages/components/progress-bar"
+	},
+	"repository": "git@github.com:zdlm/Components.git",
+	"publishConfig": {
+		"access": "public"
+	},
+	"storybook-deployer": {
+		"gitUsername": "Web Components",
+		"gitEmail": "lza@tradeshift.com",
+		"commitMessage": "Deploy Storybook [skip ci]"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"keywords": [
+		"ui",
+		"components",
+		"reusable",
+		"webcomponents",
+		"client-side",
+		"javascript",
+		"css",
+		"customelements",
+		"shadowdom"
+	]
 }

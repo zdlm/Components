@@ -1,0 +1,6 @@
+{
+	"@tw/elements": "ts.elements",
+	"@tw/elements.root": "ts.elements.root",
+	"@tw/elements.button": "ts.elements.button",
+	"@tw/elements.progress-bar": "ts.elements.progress-bar"
+}
